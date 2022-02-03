@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CounterView extends StatefulWidget {
-  const CounterView({Key? key, required this.title}) : super(key: key);
+  const CounterView({Key key, this.title}) : super(key: key);
 
   final String title;
 
