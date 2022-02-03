@@ -17,19 +17,8 @@ class _BottomNavigationViewState extends State<BottomNavigationView> {
       appBar: AppBar(
         title: Text('BottomNavigation'),
       ),
-      body: views[viewIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        onTap: (index) => setState(() {
-          viewIndex = index;
-        }),
-        currentIndex: viewIndex,
-        items: [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.notifications), label: 'Notifications'),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile')
-        ],
-      ),
+      // body: ,
+      // bottomNavigationBar: ,
     );
   }
 }

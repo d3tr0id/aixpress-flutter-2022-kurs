@@ -11,17 +11,6 @@ class TextView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: SizedBox(
-        width: 150,
-        child: Text('Das ist ein Beispiel für Text in Flutter!',
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-            style: TextStyle(
-              color: Colors.red,
-              fontSize: 30,
-            )),
-      ),
-    );
+    return Scaffold();
   }
 }

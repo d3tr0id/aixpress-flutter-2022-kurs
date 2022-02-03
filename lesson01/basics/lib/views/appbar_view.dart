@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 /**
- * AppBar, title, leading, centerTitle, actions, bottom
+ * AppBar, title, leading, centerTitle, actions, bottom,
+ * preferredSize bottom, Size.fromHeight
  */
 
 class AppBarView extends StatelessWidget {
@@ -9,9 +10,7 @@ class AppBarView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('AppBar'),
-        bottom: PreferredSize(
-            child: Text('Bottom of AppBar'),
-            preferredSize: Size.fromHeight(100)),
+        // bottom:
       ),
     );
   }

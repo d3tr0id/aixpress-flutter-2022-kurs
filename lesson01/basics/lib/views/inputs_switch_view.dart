@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 
 /**
  * Toggles and sliders
+ * Setting Model, MySlider Model
+ * Column ListTile with Switch from settings.map()
+ * Slider with Model
  */
 
 class InputsSwitchView extends StatefulWidget {
@@ -23,31 +26,7 @@ class _InputsSwitchViewState extends State<InputsSwitchView> {
     return Scaffold(
         body: Column(
       mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        ...settings.map((setting) => ListTile(
-              title: Text(setting.title),
-              trailing: Switch.adaptive(
-                value: setting.isToggled,
-                onChanged: (value) => setState(() {
-                  setting.isToggled = value;
-                }),
-              ),
-            )),
-        Text(
-          'Price',
-          style: TextStyle(fontSize: 20),
-        ),
-        Slider(
-          min: 0,
-          max: 10,
-          divisions: 5,
-          label: price.value.ceil().toString() + ' €',
-          value: price.value,
-          onChanged: (value) => setState(() {
-            price.value = value;
-          }),
-        )
-      ],
+      children: [],
     ));
   }
 }
