@@ -1,45 +1,97 @@
 import 'dart:convert';
 
+class MoviesResponse {
+  final List<Movie> movies;
+  final List<String> categories;
+  final List<String> years;
+  MoviesResponse({
+    this.movies,
+    this.categories,
+    this.years,
+  });
+
+  Map<String, dynamic> toMap() {
+    return {
+      'movies': movies.map((x) => x.toMap()).toList(),
+      'categories': categories,
+      'years': years,
+    };
+  }
+
+  factory MoviesResponse.fromMap(Map<String, dynamic> map) {
+    return MoviesResponse(
+      movies: List<Movie>.from(map['movies']?.map((x) => Movie.fromMap(x))),
+      categories: List<String>.from(map['categories']),
+      years: List<String>.from(map['years']),
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory MoviesResponse.fromJson(String source) =>
+      MoviesResponse.fromMap(json.decode(source));
+
+  @override
+  String toString() =>
+      'Movies(movies: $movies, categories: $categories, years: $years)';
+}
+
 class Movie {
-  String country;
-  String director;
-  String plot;
-  String poster;
-  String year;
-  String title;
-  String rating;
-  int id;
-  String category;
+  final String country;
+  final String director;
+  final String category;
+  final String plot;
+  final String poster;
+  final String year;
+  final String title;
+  final String imdbRating;
+  final int id;
   Movie({
     this.country,
     this.director,
+    this.category,
     this.plot,
     this.poster,
     this.year,
     this.title,
-    this.rating,
+    this.imdbRating,
     this.id,
-    this.category,
   });
+
+  Map<String, dynamic> toMap() {
+    return {
+      'country': country,
+      'director': director,
+      'category': category,
+      'plot': plot,
+      'poster': poster,
+      'year': year,
+      'title': title,
+      'imdbRating': imdbRating,
+      'id': id,
+    };
+  }
 
   factory Movie.fromMap(Map<String, dynamic> map) {
     return Movie(
       country: map['country'] ?? '',
       director: map['director'] ?? '',
+      category: map['category'] ?? '',
       plot: map['plot'] ?? '',
       poster: map['poster'] ?? '',
       year: map['year'] ?? '',
       title: map['title'] ?? '',
-      rating: map['rating'] ?? '',
-      id: map['id'] ?? '',
-      category: map['category'] ?? '',
+      imdbRating: map['imdbRating'] ?? '',
+      id: map['id']?.toInt() ?? 0,
     );
   }
+
+  String toJson() => json.encode(toMap());
 
   factory Movie.fromJson(String source) => Movie.fromMap(json.decode(source));
 
   @override
   String toString() {
-    return 'Movie(country: $country, director: $director, plot: $plot, poster: $poster, year: $year, title: $title, rating: $rating, id: $id, category: $category)';
+    return 'Movie(country: $country, director: $director, category: $category, plot: $plot, poster: $poster, year: $year, title: $title, imdbRating: $imdbRating, id: $id)';
   }
 }

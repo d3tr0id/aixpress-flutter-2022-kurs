@@ -1,7 +1,6 @@
 import 'dart:developer';
 
-// import 'package:first_layout/models/movie.dart';
-import 'package:first_layout/models/rki.dart';
+import 'package:first_layout/models/movie.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
