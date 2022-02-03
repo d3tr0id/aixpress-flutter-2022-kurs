@@ -1,127 +1,157 @@
-import 'dart:convert';
 import 'dart:developer';
 
-import 'package:first_layout/models/movie.dart';
+// import 'package:first_layout/models/movie.dart';
+import 'package:first_layout/models/rki.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class HomeView extends StatefulWidget {
-  const HomeView({Key? key, required this.title}) : super(key: key);
-
-  final String title;
+  HomeView({Key key}) : super(key: key);
 
   @override
   State<HomeView> createState() => _HomeViewState();
 }
 
 class _HomeViewState extends State<HomeView> {
-  List<Movie> allMovies = [];
+  Future<List<Movie>> allMovies;
   List<Movie> favoriteMovies = [];
 
   Future<List<Movie>> readJson() async {
-    List<Movie> movies = [];
+    MoviesResponse moviesResponse;
     final String response = await rootBundle.loadString('assets/movies.json');
-    final data = await json.decode(response);
-    for (var entry in data['movies']) {
-      Movie movie = Movie.fromMap(entry);
-      movies.add(movie);
-    }
-    // await Future.delayed(Duration(seconds: 1));
-    allMovies = movies;
-    return movies;
+    await Future.delayed(Duration(seconds: 1));
+    moviesResponse = MoviesResponse.fromJson(response);
+    return moviesResponse.movies;
   }
 
   @override
   void initState() {
     super.initState();
+    allMovies = readJson();
+  }
+
+  bool isMovieFavorite(Movie m) {
+    return favoriteMovies.where((element) => element.id == m.id).isNotEmpty;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(widget.title),
+          title: Text('Home'),
         ),
         body: FutureBuilder<List<Movie>>(
-            future: readJson(),
+            future: allMovies,
             builder: (context, snap) {
               if (snap.connectionState == ConnectionState.waiting)
                 return Center(child: CircularProgressIndicator());
 
               if (snap.connectionState == ConnectionState.done) {
                 if (snap.hasData) {
-                  return Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: GridView(
-                        children: snap.data!
-                            .map((e) => GestureDetector(
-                                  onTap: () => print('tapped'),
-                                  child: Card(
-                                    clipBehavior: Clip.hardEdge,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(8)),
-                                    elevation: 8,
-                                    child: Column(children: [
-                                      Expanded(
-                                        flex: 4,
-                                        child: Image.network(
-                                          e.poster,
-                                          width: double.infinity,
-                                          // height: 500,
-                                          opacity: AlwaysStoppedAnimation(1),
-                                          fit: BoxFit.cover,
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 16.0),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Expanded(
-                                                flex: 3,
-                                                child: Text(e.title,
+                  return ListView(
+                    children: snap.data
+                        .map((e) => SizedBox(
+                              height: 200,
+                              child: Card(
+                                  margin: EdgeInsets.all(12),
+                                  clipBehavior: Clip.hardEdge,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20)),
+                                  elevation: 8,
+                                  shadowColor: Colors.black26,
+                                  child: InkWell(
+                                    onTap: () => print('card tapped'),
+                                    child: Row(
+                                      children: [
+                                        Container(
+                                            clipBehavior: Clip.hardEdge,
+                                            child: Image.network(
+                                              e.poster,
+                                            ),
+                                            decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.only(
+                                                    bottomRight:
+                                                        Radius.circular(50)))),
+                                        Expanded(
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Text(e.title,
+                                                    style: TextStyle(
+                                                        fontSize: 16,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        color: Colors.black87)),
+                                                SizedBox(height: 10),
+                                                Text(e.year,
+                                                    style: TextStyle(
+                                                        fontSize: 11,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: Colors.black54)),
+                                                Text(e.category,
+                                                    style: TextStyle(
+                                                        fontSize: 11,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: Colors.black54)),
+                                                SizedBox(height: 10),
+                                                // Spacer(),
+                                                Text(e.plot,
                                                     maxLines: 2,
                                                     overflow:
                                                         TextOverflow.ellipsis,
                                                     style: TextStyle(
-                                                        fontSize: 24,
-                                                        color: Colors.white70)),
-                                              ),
-                                              Expanded(
-                                                child: IconButton(
-                                                  splashRadius: 30,
-                                                  padding:
-                                                      const EdgeInsets.all(0),
-                                                  icon: Icon(
-                                                    Icons.favorite_border,
-                                                    size: 40,
-                                                  ),
-                                                  onPressed: () => print('ads'),
-                                                ),
-                                              ),
-                                            ],
+                                                        fontSize: 12,
+                                                        fontWeight:
+                                                            FontWeight.w400,
+                                                        color: Colors.black87)),
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.end,
+                                                  children: [
+                                                    IconButton(
+                                                        onPressed:
+                                                            () => setState(() {
+                                                                  if (!isMovieFavorite(
+                                                                      e))
+                                                                    favoriteMovies
+                                                                        .add(e);
+                                                                  else
+                                                                    favoriteMovies
+                                                                        .removeWhere((m) =>
+                                                                            m.id ==
+                                                                            e.id);
+                                                                }),
+                                                        icon: isMovieFavorite(e)
+                                                            ? Icon(
+                                                                Icons.favorite)
+                                                            : Icon(Icons
+                                                                .favorite_border))
+                                                  ],
+                                                )
+                                              ],
+                                            ),
                                           ),
-                                        ),
-                                      )
-                                    ]),
-                                  ),
-                                ))
-                            .toList(),
-                        gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                            crossAxisSpacing: 10,
-                            mainAxisSpacing: 10,
-                            maxCrossAxisExtent: 400,
-                            mainAxisExtent: 500)),
+                                        )
+                                      ],
+                                    ),
+                                  )),
+                            ))
+                        .toList(),
                   );
                   // log(snap.data.toString());
                 } else {
                   log('error');
                 }
               }
-              return Text('asd');
+              return Text('Error');
             }));
   }
 }
