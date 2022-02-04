@@ -1,11 +1,23 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(const MyApp());
 }
 
+class MyHomePageModel extends ChangeNotifier {
+  int _counter = 0;
+  int get counter => _counter;
+  void incrementCounter() {
+    _counter += 1;
+    notifyListeners();
+  }
+}
+
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,33 +26,21 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: ChangeNotifierProvider(
+        builder: (_, __) => MyHomePage(),
+        create: (context) => MyHomePageModel(),
+      ),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
+class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    int count = context.read<MyHomePageModel>().counter;
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text('Counter'),
       ),
       body: Center(
         child: Column(
@@ -50,14 +50,14 @@ class _MyHomePageState extends State<MyHomePage> {
               'You have pushed the button this many times:',
             ),
             Text(
-              '$_counter',
+              '$count',
               style: Theme.of(context).textTheme.headline4,
-            ),
+            )
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
+        onPressed: context.read<MyHomePageModel>().incrementCounter,
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ),
