@@ -1,19 +1,14 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
+/**
+ * Create CounterModel
+ * Add ChangeNotifierProvider
+ * use context.watch() context.read()
+ */
 void main() {
   runApp(const MyApp());
-}
-
-class MyHomePageModel extends ChangeNotifier {
-  int _counter = 0;
-  int get counter => _counter;
-  void incrementCounter() {
-    _counter += 1;
-    notifyListeners();
-  }
 }
 
 class MyApp extends StatelessWidget {
@@ -26,18 +21,27 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: ChangeNotifierProvider(
-        builder: (_, __) => MyHomePage(),
-        create: (context) => MyHomePageModel(),
-      ),
+      home: MyHomePage(),
     );
   }
 }
 
-class MyHomePage extends StatelessWidget {
+class MyHomePage extends StatefulWidget {
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  int counter = 0;
+
+  void incrementCounter() {
+    setState(() {
+      counter++;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    int count = context.read<MyHomePageModel>().counter;
     return Scaffold(
       appBar: AppBar(
         title: Text('Counter'),
@@ -50,14 +54,14 @@ class MyHomePage extends StatelessWidget {
               'You have pushed the button this many times:',
             ),
             Text(
-              '$count',
+              '$counter',
               style: Theme.of(context).textTheme.headline4,
             )
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: context.read<MyHomePageModel>().incrementCounter,
+        onPressed: incrementCounter,
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ),
