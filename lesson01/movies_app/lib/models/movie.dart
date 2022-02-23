@@ -11,15 +11,15 @@ class Movie {
   int id;
   String category;
   Movie({
-    required this.country,
-    required this.director,
-    required this.plot,
-    required this.poster,
-    required this.year,
-    required this.title,
-    required this.rating,
-    required this.id,
-    required this.category,
+    this.country,
+    this.director,
+    this.plot,
+    this.poster,
+    this.year,
+    this.title,
+    this.rating,
+    this.id,
+    this.category,
   });
 
   factory Movie.fromMap(Map<String, dynamic> map) {
