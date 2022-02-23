@@ -6,8 +6,12 @@ import 'package:stacked_services/stacked_services.dart';
 
 class MovieDetailViewModel extends BaseViewModel {
   final _movieService = locator<MovieService>();
-  final Movie movie;
-  MovieDetailViewModel(this.movie);
+  Movie _movie;
+  Movie get movie => _movie;
+
+  setMovie(Movie m) {
+    _movie = m;
+  }
 
   bool get isFavorite => _movieService.favoriteMovies.contains(movie);
 

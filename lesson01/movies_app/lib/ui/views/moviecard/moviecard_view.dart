@@ -10,56 +10,84 @@ class MovieCardView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<MovieCardViewModel>.reactive(
-      viewModelBuilder: () => MovieCardViewModel(movie),
+      viewModelBuilder: () => MovieCardViewModel(),
+      onModelReady: (model) => model.setMovie(movie),
       builder: (
         BuildContext context,
         MovieCardViewModel model,
         Widget child,
       ) {
-        return GestureDetector(
-          onTap: model.openMovieDetailView,
-          child: Card(
-            margin: EdgeInsets.all(16),
-            clipBehavior: Clip.hardEdge,
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-            elevation: 8,
-            child: Column(children: [
-              Expanded(
-                flex: 4,
+        model.setMovie(movie);
+        return Card(
+          margin: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+          clipBehavior: Clip.hardEdge,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          elevation: 8,
+          shadowColor: Colors.black38,
+          child: InkWell(
+            onTap: model.openMovieDetailView,
+            child: Row(children: [
+              Container(
+                // width: 100,
+                // height: ,
+                clipBehavior: Clip.hardEdge,
+                decoration: BoxDecoration(
+                    borderRadius:
+                        BorderRadius.only(bottomRight: Radius.circular(48))),
                 child: Image.network(
                   movie.poster,
-                  width: double.infinity,
+                  // width: double.infinity,
+                  // width: 100,
                   // height: 500,
-                  opacity: AlwaysStoppedAnimation(1),
-                  fit: BoxFit.cover,
+                  // opacity: AlwaysStoppedAnimation(1),
+                  // fit: BoxFit.fitHeight,
                 ),
               ),
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  padding: const EdgeInsets.all(8),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
+                      Text(movie.title,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(fontSize: 16)),
+                      SizedBox(height: 10),
+                      Text(movie.year,
+                          style: TextStyle(
+                              fontSize: 12,
+                              color: Colors.black54,
+                              fontWeight: FontWeight.bold)),
+                      Text(movie.category,
+                          style: TextStyle(
+                              fontSize: 12,
+                              color: Colors.black54,
+                              fontWeight: FontWeight.bold)),
+                      SizedBox(height: 10),
+                      Text(movie.plot,
+                          maxLines: 3,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(fontSize: 12)),
                       Expanded(
-                        flex: 3,
-                        child: Text(movie.title,
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                            style:
-                                TextStyle(fontSize: 24, color: Colors.white70)),
-                      ),
-                      Expanded(
-                        child: IconButton(
-                          splashRadius: 30,
-                          padding: const EdgeInsets.all(0),
-                          icon: Icon(
-                            model.isFavorite
-                                ? Icons.favorite
-                                : Icons.favorite_border,
-                            size: 40,
+                        child: Align(
+                          // heightFactor: 0.5,
+                          alignment: Alignment.bottomRight,
+                          child: IconButton(
+                            splashRadius: 30,
+                            icon: Icon(
+                              model.isFavorite
+                                  ? Icons.favorite
+                                  : Icons.favorite_border,
+                              size: 30,
+                              color: model.isFavorite
+                                  ? Colors.red
+                                  : Colors.black54,
+                            ),
+                            onPressed: model.toggleFavorite,
                           ),
-                          onPressed: model.toggleFavorite,
                         ),
                       ),
                     ],

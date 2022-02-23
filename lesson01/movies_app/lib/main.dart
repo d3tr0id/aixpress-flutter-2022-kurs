@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'aixpress',
-      theme: ThemeData.dark(),
+      theme: ThemeData(primarySwatch: Colors.teal),
       home: HomeView(),
       navigatorKey: StackedService.navigatorKey,
     );

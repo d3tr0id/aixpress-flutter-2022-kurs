@@ -4,8 +4,13 @@ import 'package:flutter/services.dart';
 import 'package:movies_app/locator.dart';
 import 'package:movies_app/models/movie.dart';
 import 'package:movies_app/services/ApiService.dart';
+import 'package:stacked/stacked.dart';
 
-class MovieService {
+class MovieService with ReactiveServiceMixin {
+  MovieService() {
+    listenToReactiveValues(favoriteMovies);
+  }
+
   final _apiService = locator<APIService>();
   List<Movie> allMovies = [];
   List<Movie> favoriteMovies = [];
@@ -18,5 +23,6 @@ class MovieService {
     favoriteMovies.contains(movie)
         ? favoriteMovies.remove(movie)
         : favoriteMovies.add(movie);
+    notifyListeners();
   }
 }

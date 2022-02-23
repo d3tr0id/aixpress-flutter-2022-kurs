@@ -9,12 +9,13 @@ class MovieDetailView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<MovieDetailViewModel>.reactive(
-      viewModelBuilder: () => MovieDetailViewModel(movie),
+      viewModelBuilder: () => MovieDetailViewModel(),
       builder: (
         BuildContext context,
         MovieDetailViewModel model,
         Widget child,
       ) {
+        model.setMovie(movie);
         return Scaffold(
           body: CustomScrollView(
             slivers: [
@@ -45,11 +46,60 @@ class MovieDetailView extends StatelessWidget {
                 ],
               ),
               SliverToBoxAdapter(
-                child: Padding(
-                  padding: const EdgeInsets.all(32.0),
-                  child: Text(movie.plot * 10),
+                child: ListTile(
+                    leading: Icon(
+                      Icons.title,
+                      size: 30,
+                    ),
+                    title: Text(movie.title,
+                        style: TextStyle(
+                          color: Colors.teal,
+                          fontSize: 18,
+                        ))),
+              ),
+              SliverToBoxAdapter(child: Divider()),
+              SliverToBoxAdapter(
+                child: ListTile(
+                    leading: Icon(
+                      Icons.info,
+                      size: 30,
+                    ),
+                    title: Text(movie.plot * 5)),
+              ),
+              SliverToBoxAdapter(child: Divider()),
+              SliverToBoxAdapter(
+                child: ListTile(
+                    leading: Icon(
+                      Icons.thumb_up_outlined,
+                      size: 30,
+                    ),
+                    title: Text('IMDb',
+                        style: TextStyle(color: Colors.teal, fontSize: 18)),
+                    subtitle: Text(movie.rating)),
+              ),
+              SliverToBoxAdapter(child: Divider()),
+              SliverToBoxAdapter(
+                child: ListTile(
+                    leading: Icon(
+                      Icons.calendar_today,
+                      size: 30,
+                    ),
+                    title: Text('Jahr',
+                        style: TextStyle(color: Colors.teal, fontSize: 18)),
+                    subtitle: Text(movie.year)),
+              ),
+              SliverToBoxAdapter(child: Divider()),
+              SliverToBoxAdapter(
+                child: ListTile(
+                  leading: Icon(
+                    Icons.person_outline,
+                    size: 30,
+                  ),
+                  title: Text('Regisseur',
+                      style: TextStyle(color: Colors.teal, fontSize: 18)),
+                  subtitle: Text(movie.director),
                 ),
-              )
+              ),
             ],
           ),
         );

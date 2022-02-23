@@ -30,7 +30,7 @@ class Movie {
       poster: map['poster'] ?? '',
       year: map['year'] ?? '',
       title: map['title'] ?? '',
-      rating: map['rating'] ?? '',
+      rating: map['imdbRating'] ?? '',
       id: map['id'] ?? '',
       category: map['category'] ?? '',
     );
