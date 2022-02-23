@@ -16,7 +16,7 @@ class MovieService with ReactiveServiceMixin {
   List<Movie> favoriteMovies = [];
 
   getAllMovies() async {
-    allMovies = await _apiService.fetchAllMovies();
+    allMovies = await _apiService.fetchAllMoviesHttp();
   }
 
   toggleFavorite(Movie movie) {
