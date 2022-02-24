@@ -9,27 +9,11 @@ class BottomNavigationView extends StatefulWidget {
 }
 
 class _BottomNavigationViewState extends State<BottomNavigationView> {
-  List<Widget> views = [HomeView(), NotificationsView(), ProfileView()];
-  int viewIndex = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('BottomNavigation'),
-      ),
-      body: views[viewIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        onTap: (index) => setState(() {
-          viewIndex = index;
-        }),
-        currentIndex: viewIndex,
-        items: [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.notifications), label: 'Notifications'),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile')
-        ],
-      ),
-    );
+        appBar: AppBar(
+      title: Text('BottomNavigation'),
+    ));
   }
 }

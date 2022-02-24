@@ -7,32 +7,6 @@ import 'package:flutter/material.dart';
 class ColumnView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Expanded(
-            child: Container(
-              color: Colors.lightBlue,
-              child: Icon(Icons.car_rental),
-            ),
-          ),
-          Expanded(
-            flex: 2,
-            child: Container(
-              color: Colors.lightGreen,
-              child: Icon(Icons.beach_access),
-            ),
-          ),
-          Expanded(
-            flex: 3,
-            child: Container(
-              color: Colors.teal,
-              child: Icon(Icons.person),
-            ),
-          ),
-        ],
-      ),
-    );
+    return Scaffold();
   }
 }

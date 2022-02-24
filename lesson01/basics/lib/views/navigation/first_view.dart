@@ -12,9 +12,6 @@ class FirstView extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text('First View'),
-              ElevatedButton(
-                  onPressed: () => Navigator.pushNamed(context, '/second'),
-                  child: Text('Go to Second View!'))
             ],
           ),
         ));

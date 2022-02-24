@@ -9,13 +9,6 @@ import 'package:flutter/material.dart';
 class ScrollViewExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: SingleChildScrollView(
-      child: Center(
-        child: Column(
-            children: List.generate(
-                100, (index) => ListTile(title: Text('Index: $index')))),
-      ),
-    ));
+    return Scaffold();
   }
 }

@@ -32,16 +32,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Kurs',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: DrawerView(),
-      // initialRoute: '/first',
-      routes: {
-        '/first': (context) => FirstView(),
-        '/second': (context) => SecondView(),
-      },
-    );
+        title: 'Flutter Kurs',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: Scaffold());
   }
 }
