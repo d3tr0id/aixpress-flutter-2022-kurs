@@ -11,11 +11,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Todo App',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'Todo App'),
     );
   }
 }
@@ -95,19 +95,48 @@ class _MyHomePageState extends State<MyHomePage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text('Todos',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
-            ...todos.map((e) => ListTile(
-                  title: Text(e),
-                  onTap: () {
-                    setState(() {
-                      todos.remove(e);
-                      done.add(e);
-                    });
-                  },
-                )),
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24)),
+            if (todos.isEmpty)
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text('No Todos yet.', style: TextStyle(fontSize: 18)),
+              ),
+            ReorderableListView(
+                shrinkWrap: true,
+                children: [
+                  ...todos.map((e) => ListTile(
+                        key: Key(e),
+                        leading: Icon(Icons.check_box_outline_blank_outlined),
+                        title: Text(e),
+                        onTap: () {
+                          setState(() {
+                            todos.remove(e);
+                            done.add(e);
+                          });
+                        },
+                      ))
+                ],
+                onReorder: (oldIndex, newIndex) {
+                  setState(() {
+                    if (newIndex > oldIndex) {
+                      newIndex -= 1;
+                    }
+                    String t = todos.removeAt(oldIndex);
+                    todos.insert(newIndex, t);
+                  });
+                }),
+            Divider(),
             Text('Done',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24)),
+            if (done.isEmpty)
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child:
+                    Text('Nothing done yet.', style: TextStyle(fontSize: 18)),
+              ),
             ...done.map((e) => ListTile(
+                  key: Key(e.hashCode.toString()),
+                  leading: Icon(Icons.check_box_rounded),
                   title: Text(
                     e,
                     style: TextStyle(decoration: TextDecoration.lineThrough),
