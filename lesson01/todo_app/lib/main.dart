@@ -32,56 +32,23 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   List<String> todos = [];
   List<String> done = [];
-  TextEditingController _textEditingController;
-  final GlobalKey<AnimatedListState> listKey = GlobalKey<AnimatedListState>();
   @override
   void initState() {
     super.initState();
-    _textEditingController = TextEditingController();
   }
 
   @override
   void dispose() {
-    _textEditingController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    Future<String> _showDialog() {
+    Future<String> _showCreateTodoDialog() {
       return showDialog<String>(
           context: context,
           builder: (context) {
-            return AlertDialog(
-              title: Text('Create New Todo'),
-              content: TextField(
-                decoration: InputDecoration(
-                  helperText: 'Create UI Design for App....',
-                ),
-                controller: _textEditingController,
-              ),
-              actions: [
-                TextButton(
-                    onPressed: () => {Navigator.of(context).pop()},
-                    style: TextButton.styleFrom(
-                      primary: Colors.pink,
-                    ),
-                    child: Text(
-                      'Cancel',
-                    )),
-                TextButton(
-                  onPressed: () {
-                    setState(() {
-                      if (_textEditingController.text.isNotEmpty)
-                        todos.add(_textEditingController.text.trim());
-                      Navigator.of(context).pop();
-                      _textEditingController.clear();
-                    });
-                  },
-                  child: Text('Add'),
-                )
-              ],
-            );
+            return AlertDialog();
           });
     }
 
@@ -89,70 +56,8 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('Todos',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24)),
-            if (todos.isEmpty)
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text('No Todos yet.', style: TextStyle(fontSize: 18)),
-              ),
-            ReorderableListView(
-                shrinkWrap: true,
-                children: [
-                  ...todos.map((e) => ListTile(
-                        key: Key(e),
-                        leading: Icon(Icons.check_box_outline_blank_outlined),
-                        title: Text(e),
-                        onTap: () {
-                          setState(() {
-                            todos.remove(e);
-                            done.add(e);
-                          });
-                        },
-                      ))
-                ],
-                onReorder: (oldIndex, newIndex) {
-                  setState(() {
-                    if (newIndex > oldIndex) {
-                      newIndex -= 1;
-                    }
-                    String t = todos.removeAt(oldIndex);
-                    todos.insert(newIndex, t);
-                  });
-                }),
-            Divider(),
-            Text('Done',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24)),
-            if (done.isEmpty)
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child:
-                    Text('Nothing done yet.', style: TextStyle(fontSize: 18)),
-              ),
-            ...done.map((e) => ListTile(
-                  key: Key(e.hashCode.toString()),
-                  leading: Icon(Icons.check_box_rounded),
-                  title: Text(
-                    e,
-                    style: TextStyle(decoration: TextDecoration.lineThrough),
-                  ),
-                  onTap: () {
-                    setState(() {
-                      todos.add(e);
-                      done.remove(e);
-                    });
-                  },
-                )),
-          ],
-        ),
-      ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _showDialog,
+        onPressed: null,
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ),
