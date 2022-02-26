@@ -12,6 +12,18 @@ class GridViewExample extends StatelessWidget {
   Widget build(BuildContext context) {
     _gridViewBuilder() {}
 
-    return Scaffold();
+    return Scaffold(
+        body: GridView.count(
+            padding: const EdgeInsets.all(20),
+            crossAxisSpacing: 10,
+            mainAxisSpacing: 10,
+            crossAxisCount: 2,
+            children: [
+          ...List.generate(
+              20,
+              (index) => Card(
+                    child: Center(child: Text('$index')),
+                  ))
+        ]));
   }
 }

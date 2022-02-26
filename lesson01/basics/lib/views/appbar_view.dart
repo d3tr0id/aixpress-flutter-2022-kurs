@@ -7,7 +7,14 @@ class AppBarView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        centerTitle: false,
+        title: Text('AppBar'),
+        leading: Icon(Icons.person),
+        actions: [
+          IconButton(onPressed: () => print('asd'), icon: Icon(Icons.logout))
+        ],
+      ),
     );
   }
 }

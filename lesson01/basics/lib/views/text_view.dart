@@ -11,6 +11,15 @@ class TextView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center();
+    return Scaffold(
+      body: Center(
+        child: Container(
+          color: Colors.amber[300],
+          child: TextButton(
+              onPressed: () => Navigator.of(context).pushNamed('/first'),
+              child: Text('Next Page')),
+        ),
+      ),
+    );
   }
 }

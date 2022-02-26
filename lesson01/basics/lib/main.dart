@@ -36,6 +36,10 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: Scaffold());
+        routes: {
+          '/first': (context) => FirstView(),
+          '/second': (context) => SecondView(),
+        },
+        home: DrawerView());
   }
 }

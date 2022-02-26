@@ -7,6 +7,14 @@ import 'package:flutter/material.dart';
 class IconView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Center();
+    return Scaffold(
+        body: Center(
+      child: CircleAvatar(
+        backgroundColor: Colors.yellow,
+        radius: 50,
+        child: Icon(Icons.assignment_return_outlined,
+            size: 100, color: Colors.red),
+      ),
+    ));
   }
 }

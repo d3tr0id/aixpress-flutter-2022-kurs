@@ -9,6 +9,9 @@ import 'package:flutter/material.dart';
 class ScrollViewExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+        body: Column(
+      children: [...List.generate(100, (index) => Text('$index'))],
+    ));
   }
 }
