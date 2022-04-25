@@ -23,19 +23,81 @@ import 'package:counter/views/textfield_view.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MyApp());
+  // runApp(const MyApp());
+  Person person1 = new Person('Cem');
+  // person1.sprechen();
+
+  Person person2 = new Person('Johannes');
+  person2.name = 'asdasdas';
+  // person2.sprechen();
+
+  List<Person> personen = [person1, person2];
+
+  // personen.map((Person p) => p.sprechen());
+
+  personen.forEach((person) {
+    person.sprechen();
+  });
 }
 
-class MyApp extends StatelessWidget {
+class Person {
+  int anzahlAugen = 2;
+  String name;
+
+  Person(String name) {
+    this.name = name;
+  }
+
+  void sprechen() {
+    print('hallo, mein name ist $name');
+  }
+}
+
+class MyApp extends StatefulWidget {
   const MyApp({Key key}) : super(key: key);
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  int counter = 2;
+
+  void incrementCounter() {
+    setState(() {
+      counter++;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
         title: 'Flutter Kurs',
         theme: ThemeData(
-          primarySwatch: Colors.blue,
+          primarySwatch: Colors.green,
         ),
-        home: Scaffold());
+        home: Scaffold(
+          appBar: AppBar(
+            title: Text('Hallo'),
+            centerTitle: true,
+          ),
+          body: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text('Das ist unsere App', style: TextStyle(fontSize: 30)),
+                Padding(
+                  padding: const EdgeInsets.only(left: 40),
+                  child: Text('Counter ist: $counter',
+                      style: TextStyle(fontSize: 36, color: Colors.red)),
+                ),
+              ],
+            ),
+          ),
+          floatingActionButton: FloatingActionButton(
+            child: Icon(Icons.add),
+            onPressed: incrementCounter,
+          ),
+        ));
   }
 }
